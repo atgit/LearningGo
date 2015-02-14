@@ -1,16 +1,16 @@
 // Philosophy
 // Go is about composition rather than type hierachies
-// No generic
 // Built-in asynchronous and synchronization primitives
+// No generic
 
 package main
 
 import (
-		"fmt"
-		"runtime"
-		"math"
-		"time"
-		"mypackage"
+    "fmt"
+    "runtime"
+    "math"
+    "time"
+    "mypackage"
 )
 
 
@@ -26,19 +26,19 @@ var ff = 3.142        // float64
 var gg = 0.867 + 0.5i // complex128
 
 
-//// Constant - can be character, string, boolean, or numeric values
+//// Constant - can be character, string, bool, or numeric values
 const True = true
 
 const (
-  	Big   = 1 << 100
-  	Small = Big >> 99
+    Big   = 1 << 100
+    Small = Big >> 99
 )
 
 
 //// Pointer - hold the memory address of a variable
 func pointers() {
-  	var p *int
-  	p = &i          // & operator generates a pointer to its operand
+    var p *int
+    p = &i          // & operator generates a pointer to its operand
 
     fmt.Println(*p) // * operator denotes the pointer's underlying value
     *p = 11         // Set value through a pointer
@@ -78,15 +78,15 @@ func arrays() {
     arr[0] = "Hello, "
     arr[1] = "world!"
 
-		// Or you can have the compiler count
-		arr1 := [...]string{"Hello, ", "world!"}
-		fmt.Println(arr1[0] + arr1[1])
+    // Or you can have the compiler count
+    arr1 := [...]string{"Hello, ", "world!"}
+    fmt.Println(arr1[0] + arr1[1])
 
 
     // Slice
-		// - A slice is a descriptor of an array segment
-		// - A slice consists  of a pointer to an array, the length of the segment, and its capacity (the maximum length of the segment)
-		// - Slicing does NOT copy data. Therefore, modifying data via a slice is essentially changing the data in the underlying array
+    // - A slice is a descriptor of an array segment
+    // - A slice consists  of a pointer to an array, the length of the segment, and its capacity (the maximum length of the segment)
+    // - Slicing does NOT copy data. Therefore, modifying data via a slice is essentially changing the data in the underlying array
     p := []int{2, 3, 5, 7, 11, 13}
     fmt.Printf("len: %v; cap: %v;\n", len(p), cap(p))
     fmt.Printf("p[1:4] == %v; len: %v; cap: %v;\n", p[1:4], len(p[1:4]), cap(p[1:4]))
@@ -104,15 +104,15 @@ func arrays() {
         fmt.Println(i, v)
     }
 
-		// Growing slics
-		s := p[1:4]
-		ss := append(s, 15)
-		fmt.Println(ss)		// [3 5 7 15]
-		fmt.Println(p)		// [2 3 5 7 15 13] - If the append operation does not exceed the capacity of the underlying array, changes will apply to the current underlying array
+    // Growing slics
+    s := p[1:4]
+    ss := append(s, 15)
+    fmt.Println(ss)     // [3 5 7 15]
+    fmt.Println(p)      // [2 3 5 7 15 13] - If the append operation does not exceed the capacity of the underlying array, changes will apply to the current underlying array
 
-		pp := append(p, 17)	// Create an other array because the old one does not have more capacity
-		fmt.Println(p)
-		fmt.Println(pp)
+    pp := append(p, 17) // Create an other array because the old one does not have more capacity
+    fmt.Println(p)
+    fmt.Println(pp)
 }
 
 
@@ -135,42 +135,42 @@ func maps() {
 
 //// Flow control
 func flowcontrol() {
-		//// Flow-control
-		sum := 0
-		for i =0; i<5; i++ {    // pre and post statements can be empty
-			sum +=i
-		}
-		fmt.Println(sum)
+    //// Flow-control
+    sum := 0
+    for i =0; i<5; i++ {    // pre and post statements can be empty
+        sum +=i
+    }
+    fmt.Println(sum)
 
-		if v := math.Pow(10, 2); v < 100 {	// pre statements are allowed, like for
-			fmt.Println(v)
-		} else {
-			// Variables declared inside an if short statement are also available inside any of the else blocks.
-			fmt.Printf("%g >= %g\n", v, 100)
-		}
-		// can't use v here, though
+    if v := math.Pow(10, 2); v < 100 {  // pre statements are allowed, like for
+        fmt.Println(v)
+    } else {
+        // Variables declared inside an if short statement are also available inside any of the else blocks.
+        fmt.Printf("%g >= %g\n", v, 100)
+    }
+    // can't use v here, though
 
-		switch os := runtime.GOOS; os {
-			case "darwin":
-			fmt.Println("OS X.")
-			case "linux":
-			fmt.Println("Linux.")
-			default:
-			fmt.Printf("%s.", os)
-		}
+    switch os := runtime.GOOS; os {
+        case "darwin":
+        fmt.Println("OS X.")
+        case "linux":
+        fmt.Println("Linux.")
+        default:
+        fmt.Printf("%s.", os)
+    }
 }
 
 
 //// Function
 func add(x int, y int) int {
-		fmt.Println("add() entering ...")
-		z := x + y    // Short assignment statement is not available outside of a func
-		return z
+    fmt.Println("add() entering ...")
+    z := x + y    // Short assignment statement is not available outside of a func
+    return z
 }
 
 // Return multiple values
 func swap(x, y string) (string, string) {
-		return y, x
+    return y, x
 }
 
 // Closure
@@ -197,7 +197,7 @@ func (v *Vertex) Abs() float64 {
     return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 func methods() {
-    v := &Vertex{3, 4}		// The type here must match with the method definition
+    v := &Vertex{3, 4}      // The type here must match with the method definition
     fmt.Println(v.Abs())
 }
 
@@ -222,7 +222,7 @@ func interfaces() {
 // - Lightweight thread managed by Go runtime
 // - Run in the same address space
 func goroutines() {
-	  go add(1, 2)
+    go add(1, 2)
 }
 
 
@@ -230,46 +230,46 @@ func goroutines() {
 // - Typed
 // - Send and receive operations are blocked until the other side is ready - synchronization without explicit locks
 func sum(a []int, c chan int) {
-	  sum := 0
-		for _, v := range a {
-			  sum += v
-		}
-		c <- sum		// Send a value to a channel
+    sum := 0
+    for _, v := range a {
+          sum += v
+    }
+    c <- sum        // Send a value to a channel
 }
 func channels() {
-	  a := []int{7, 2, 8, -9, 4, 0}
-	  ch := make(chan int, 100)		// Buffered channel - Send operation will be blocked when the buffer is full
-		go sum(a[:len(a)/2], ch)
-		go sum(a[len(a)/2:], ch)
-		v1st, v2nd := <-ch, <-ch    // Receive values from a channel
-		fmt.Println(v1st, v2nd, v1st + v2nd)
+    a := []int{7, 2, 8, -9, 4, 0}
+    ch := make(chan int, 100)     // Buffered channel - Send operation will be blocked when the buffer is full
+go sum(a[:len(a)/2], ch)
+    go sum(a[len(a)/2:], ch)
+    v1st, v2nd := <-ch, <-ch    // Receive values from a channel
+    fmt.Println(v1st, v2nd, v1st + v2nd)
 
-		// Close a channel - only when the receiver must be told there are no more values; and should be done by the sender
-		close(ch)
-		for i := range ch {
-			  fmt.Println("This will not be printed as ch is closed", i)
-		}
+    // Close a channel - only when the receiver must be told there are no more values; and should be done by the sender
+    close(ch)
+    for i := range ch {
+          fmt.Println("This will not be printed as ch is closed", i)
+    }
 
-		// Select - wait and run randomly if multiple channels are ready
-		ch_input := make(chan int)
-		ch_quit_cmd := make(chan int)
-		go func(ch chan int) {
-			  time.Sleep(500 * time.Millisecond)
-			  ch_input <- 1
-				ch_quit_cmd <- 1
-		}(ch_input)
-		for {
-				select {
-					  case i := <- ch_input:
-						    fmt.Println(i)
-						case <- ch_quit_cmd:
-						    fmt.Println("Quitting ...")
-								return
-						default:		// The default case will run if no other case is ready
-								fmt.Println("    .")
-						    time.Sleep(50 * time.Millisecond)
-				}
-	  }
+    // Select - wait and run randomly if multiple channels are ready
+    ch_input := make(chan int)
+    ch_quit_cmd := make(chan int)
+    go func(ch chan int) {
+          time.Sleep(500 * time.Millisecond)
+          ch_input <- 1
+            ch_quit_cmd <- 1
+    }(ch_input)
+    for {
+        select {
+        case i := <- ch_input:
+            fmt.Println(i)
+        case <- ch_quit_cmd:
+            fmt.Println("Quitting ...")
+            return
+        default:        // The default case will run if no other case is ready
+            fmt.Println("    .")
+            time.Sleep(50 * time.Millisecond)
+        }
+    }
 }
 
 
@@ -282,17 +282,17 @@ func main() {
     closures()
     methods()
     interfaces()
-		goroutines()
-		channels()
+    goroutines()
+    channels()
 
-		mypackage.SayHello("Yu");
+    mypackage.SayHello("Yu");
 
 
-		//// Defer the execution of a function until the surrounding function returns
-		// The deferred call's arguments are evaluated immediately, but the function call is not executed until the surrounding function returns
-		// Stacking defers - called in last-in-first-out order
-		defer fmt.Println("1st deferred call in main()")
-		defer fmt.Println("2nd deferred call in main()")
+    //// Defer the execution of a function until the surrounding function returns
+    // The deferred call's arguments are evaluated immediately, but the function call is not executed until the surrounding function returns
+    // Stacking defers - called in last-in-first-out order
+    defer fmt.Println("1st deferred call in main()")
+    defer fmt.Println("2nd deferred call in main()")
 
-		fmt.Println("main() leaving ...")
+    fmt.Println("main() leaving ...")
 }
