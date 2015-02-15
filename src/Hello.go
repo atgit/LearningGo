@@ -27,11 +27,20 @@ var gg = 0.867 + 0.5i // complex128
 
 
 //// Constant - can be character, string, bool, or numeric values
-const True = true
+const Number = 1      // untyped constant that can be used in any expression and converted implicitly
+const True bool = true// typed constant
 
+// const group
 const (
     Big   = 1 << 100
     Small = Big >> 99
+)
+
+// iota in const group
+const (
+    One = 1<<iota   // 1, 1<<0
+    Two             // 2, 1<<1
+    Four            // 4, 1<<2
 )
 
 
@@ -75,8 +84,8 @@ func structs() {
 // which means when you pass around an array you will make a copy of the whole array
 func arrays() {
     var arr [2]string
-    arr[0] = "Hello, "
-    arr[1] = "world!"
+        arr[0] = "Hello, "
+        arr[1] = "world!"
 
     // Or you can have the compiler count
     arr1 := [...]string{"Hello, ", "world!"}
