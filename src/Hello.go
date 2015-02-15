@@ -21,9 +21,9 @@ var i, j int = 1, 2    // Variables with initializers
 var f float64 = float64(i)
 
 // Type inference - based on the precision of the constant
-var ii = 42           // int
-var ff = 3.142        // float64
-var gg = 0.867 + 0.5i // complex128
+var ii = 42,           // int
+    ff = 3.142,        // float64
+    gg = 0.867 + 0.5i  // complex128
 
 
 //// Constant - can be character, string, bool, or numeric values
@@ -84,8 +84,8 @@ func structs() {
 // which means when you pass around an array you will make a copy of the whole array
 func arrays() {
     var arr [2]string
-        arr[0] = "Hello, "
-        arr[1] = "world!"
+    arr[0] = "Hello, "
+    arr[1] = "world!"
 
     // Or you can have the compiler count
     arr1 := [...]string{"Hello, ", "world!"}
@@ -94,7 +94,7 @@ func arrays() {
 
     // Slice
     // - A slice is a descriptor of an array segment
-    // - A slice consists  of a pointer to an array, the length of the segment, and its capacity (the maximum length of the segment)
+    // - A slice consists of a pointer to an array, the length of the segment, and its capacity (the maximum length of the segment)
     // - Slicing does NOT copy data. Therefore, modifying data via a slice is essentially changing the data in the underlying array
     p := []int{2, 3, 5, 7, 11, 13}
     fmt.Printf("len: %v; cap: %v;\n", len(p), cap(p))
