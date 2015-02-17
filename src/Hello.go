@@ -20,10 +20,12 @@ var i, j int = 1, 2    // Variables with initializers
 // Type conversion must be explicit (compared with C)
 var f float64 = float64(i)
 
-// Type inference - based on the precision of the constant
-var ii = 42,           // int
-    ff = 3.142,        // float64
-    gg = 0.867 + 0.5i  // complex128
+var (
+    // Type inference - based on the precision of the constant
+    ii = 42           // int
+    ff = 3.142        // float64
+    gg = 0.867 + 0.5i // complex128
+)
 
 
 //// Constant - can be character, string, bool, or numeric values
