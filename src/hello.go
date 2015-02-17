@@ -64,6 +64,8 @@ type Vertex struct {
     Y float64
 }
 func structs() {
+    // Short variable declarations - commonly used for declaraing temparary local variables
+    // - only in functions
     v := Vertex{1, 2}
     v.X = 3
 
