@@ -3,6 +3,14 @@
 // Built-in asynchronous and synchronization primitives
 // No generic
 
+
+// Naming Convention
+// file name     - lower case - hello.go
+// pakcage name  - lower case, single word underscore is not recommended
+//                 the package name is the base name of its source directory
+// getter/setter - Owner()/SetOwner(user); var owner User
+// 
+
 package main
 
 import (
@@ -28,7 +36,9 @@ var (
 )
 
 
-//// Constant - can be character, string, bool, or numeric values
+//// Constant
+// - can be character, string, bool, or numeric values
+// - created at compile time
 const Number = 1      // untyped constant that can be used in any expression and converted implicitly
 const True bool = true// typed constant
 
@@ -153,7 +163,6 @@ func flowcontrol() {
     for i =0; i<5; i++ {    // pre and post statements can be empty
         sum +=i
     }
-    fmt.Println(sum)
 
     if v := math.Pow(10, 2); v < 100 {  // pre statements are allowed, like for
         fmt.Println(v)
@@ -161,7 +170,7 @@ func flowcontrol() {
         // Variables declared inside an if short statement are also available inside any of the else blocks.
         fmt.Printf("%g >= %g\n", v, 100)
     }
-    // can't use v here, though
+    // Can't use v here, though
 
     switch os := runtime.GOOS; os {
         case "darwin":
@@ -205,7 +214,9 @@ func closures() {
 
 // Methods - Go does not have classes. Instead, you can define methods on struct types
 // a method can be declared on any types in your package (not from another package)
-// Why receiving a pointer - 1) Avoid copying the value; 2) Allow modification
+// Why receiving a pointer?
+// - Avoid copying the value
+// - Allow modification
 func (v *Vertex) Abs() float64 {
     return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
