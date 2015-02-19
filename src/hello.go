@@ -18,22 +18,24 @@ import (
     "runtime"
     "math"
     "time"
+    "reflect"
     "mypackage"
 )
 
 
 //// Variable
-var i, j int = 1, 2    // Variables with initializers
+var i, j int = 1, 2   // Variables with initializers
+var k = 3             // Type inference - based on the precision of the constant
 
-// Type conversion must be explicit (compared with C)
-var f float64 = float64(i)
-
+// Group declaration can indicate relations between items
 var (
-    // Type inference - based on the precision of the constant
     ii = 42           // int
     ff = 3.142        // float64
     gg = 0.867 + 0.5i // complex128
 )
+
+// Type conversion must be explicit (compared with C)
+var f float64 = float64(i)
 
 
 //// Constant
@@ -60,6 +62,7 @@ const (
 func pointers() {
     var p *int
     p = &i          // & operator generates a pointer to its operand
+    fmt.Println("Type of *int: ", reflect.TypeOf(p));
 
     fmt.Println(*p) // * operator denotes the pointer's underlying value
     *p = 11         // Set value through a pointer
@@ -93,9 +96,9 @@ func structs() {
 }
 
 
-//// Array - fixed size as the length is the part of the type
-// An array variable denotes the entire array (NOT the pointer to the first element),
-// which means when you pass around an array you will make a copy of the whole array
+//// Array
+// - Arrays are values. Assigning one array to another copies all the elements - cautious to pass an array to a function
+// - fixed size as the length is the part of the type
 func arrays() {
     var arr [2]string
     arr[0] = "Hello, "
@@ -109,7 +112,7 @@ func arrays() {
     // Slice
     // - A slice is a descriptor of an array segment
     // - A slice consists of a pointer to an array, the length of the segment, and its capacity (the maximum length of the segment)
-    // - Slicing does NOT copy data. Therefore, modifying data via a slice is essentially changing the data in the underlying array
+    // - Slicing does NOT copy data. Therefore, modifying data via a slice is essentially changing the data in its underlying array
     p := []int{2, 3, 5, 7, 11, 13}
     fmt.Printf("len: %v; cap: %v;\n", len(p), cap(p))
     fmt.Printf("p[1:4] == %v; len: %v; cap: %v;\n", p[1:4], len(p[1:4]), cap(p[1:4]))
@@ -184,7 +187,7 @@ func flowcontrol() {
 
 
 //// Function
-func add(x int, y int) int {
+func add(x int, y int) int {    // The scope of function's params and return value is the same as the function body
     fmt.Println("add() entering ...")
     z := x + y    // Short assignment statement is not available outside of a func
     return z
@@ -193,6 +196,12 @@ func add(x int, y int) int {
 // Return multiple values
 func swap(x, y string) (string, string) {
     return y, x
+}
+
+// Named result parameters
+func multiply(x, y int) (ret int) {
+    ret = x * y
+    return
 }
 
 // Closure
@@ -227,10 +236,10 @@ func methods() {
 
 
 //// Interface
-// - defined by a set of methods
+// - Defined by a set of methods
 // - Interfaces are satisfied implicity - a type implements an interface by implementing the methods
 //   - Benefits: decouple interface definition packages and implementation packages
-type Abser interface {
+type Abser interface {  // Naming convention - suffix 'er' is used when the interface only has one method
     Abs() float64
 }
 func interfaces() {
@@ -239,6 +248,28 @@ func interfaces() {
 
     abser = v
     fmt.Println(abser.Abs())
+}
+
+
+//// Allocation
+func allocation() {
+    // new
+    // - zero the memory
+    // - return *T
+    v := new(Vertex)
+    fmt.Println("Zeroed by new: ", v.X, v.Y)
+
+    // composite literal
+    v1 := Vertex{1, 2}
+    fmt.Println("Constrcted by composite literal: ", v1.X, v1.Y)
+    // or by label the fields - the order of fields can be changed
+    v2 := Vertex{Y:4, X:3 }
+    fmt.Println("Constrcted by composite literal: ", v2.X, v2.Y)
+
+    // make(T, args)
+    // - create slices, maps and channels only
+    // - initialized instead of zeroed object as those three object need to be initialized before use
+    // - does not return a pointer
 }
 
 
@@ -297,6 +328,7 @@ go sum(a[:len(a)/2], ch)
 }
 
 
+
 func main() {
     flowcontrol()
     pointers()
@@ -306,6 +338,7 @@ func main() {
     closures()
     methods()
     interfaces()
+    allocation()
     goroutines()
     channels()
 
@@ -313,10 +346,10 @@ func main() {
 
 
     //// Defer the execution of a function until the surrounding function returns
-    // The deferred call's arguments are evaluated immediately, but the function call is not executed until the surrounding function returns
+    // The deferred call's arguments are evaluated immediately - when defer executs 
     // Stacking defers - called in last-in-first-out order
-    defer fmt.Println("1st deferred call in main()")
-    defer fmt.Println("2nd deferred call in main()")
+    defer fmt.Println("1st deferred call in main(): ", 1)
+    defer fmt.Println("2nd deferred call in main(): ", 2)
 
     fmt.Println("main() leaving ...")
 }
